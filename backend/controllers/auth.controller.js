@@ -38,9 +38,9 @@ exports.login = (req, res) => {
 
     // generate token and send it to client
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
+      expiresIn: "365d",
     });
-    res.cookie("token", token, { expiresIn: "1d" });
+    res.cookie("token", token, { expiresIn: "365d" });
 
     const { _id, username, name, email, role } = user;
     return res.json({ token, user: { _id, username, name, email, role } });
