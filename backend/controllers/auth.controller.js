@@ -43,7 +43,7 @@ exports.login = (req, res) => {
     res.cookie("token", token, { expiresIn: "365d" });
 
     const { _id, username, name, email, role } = user;
-    return res.json({ token, user: { _id, username, name, email, role } });
+    return res.json({ token, user: { _id, username, name, email, role }, message: 'Login Success' });
   });
 };
 

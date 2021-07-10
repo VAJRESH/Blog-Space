@@ -26,7 +26,7 @@ connection.once("open", () => {
 // middle wares and parsers
 if (process.env.NODE_ENV === "development") {
   // cors package for preventing CORS errors in development
-  app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
+  app.use(cors());
 }
 app.use(express.json());
 app.use(cookieParser());

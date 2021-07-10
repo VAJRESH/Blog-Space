@@ -1,0 +1,47 @@
+@import "../../styles/base.scss";
+
+.formSection {
+  position: relative;
+  height: 35px;
+  width: 250px;
+  margin-top: 22px;
+  border-radius: 5px;
+  border: 1px solid rgb(216, 224, 228);
+
+  input {
+    padding: 5px;
+    border: transparent;
+    background-color: rgb(240, 240, 240);
+    outline: transparent;
+    height: 100%;
+    width: 100%;
+    font-size: 15px;
+  }
+  label {
+    display: none;
+    position: absolute;
+    top: 12px;
+    left: 6px;
+    color: #757575;
+  }
+  input:focus {
+    border: 1px solid rgb(82, 82, 82);
+  }
+  input:not(:placeholder-shown) {
+    padding: 10px 5px 0 5px;
+  }
+  input:not(:placeholder-shown) + label {
+    display: inline-block;
+    top: 0;
+    left: 5px;
+    font-size: 13px;
+  }
+
+  small {
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    text-align: center;
+    width: 100%;
+  }
+}

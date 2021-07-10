@@ -18,7 +18,7 @@ const {
 // api routes;
 router.post("/register", validateRegisterDetails, register);
 router.post("/login", validateLoginDetails, login);
-router.post("/logout", logout);
+router.get("/logout", logout);
 
 // login protected route
 router.get("/secret", requireLogin, (req, res) => {
