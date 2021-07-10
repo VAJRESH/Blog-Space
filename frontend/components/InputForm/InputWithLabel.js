@@ -7,10 +7,11 @@ const InputWithLabel = ({
   isRequired,
   inputValue,
   errorMessage,
+  messageType,
 }) => {
   return (
     <section className={styles.formSection}>
-      <small className='error'>{errorMessage}</small>
+      <small className={messageType || "error"}>{errorMessage}</small>
       <input
         name={label}
         type={inputType}

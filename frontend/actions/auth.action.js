@@ -1,18 +1,18 @@
 import { API } from "../config";
 
-// export function isNameAvailable(name) {
-//   return fetch(`${API}/auth/${name}`, {
-//     method: "GET",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//     },
-//   })
-//     .then((res) => {
-//       return res.json();
-//     })
-//     .catch((err) => console.log(err));
-// }
+export function isUsernameAvailable(username) {
+  return fetch(`${API}/auth/isTaken/${username}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+}
 
 export function register(user) {
   return fetch(`${API}/auth/register`, {

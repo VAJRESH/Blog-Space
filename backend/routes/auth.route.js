@@ -7,6 +7,7 @@ const {
   login,
   logout,
   requireLogin,
+  isUsernameTaken,
 } = require("../controllers/auth.controller");
 
 // validators
@@ -18,6 +19,7 @@ const {
 // api routes;
 router.post("/register", validateRegisterDetails, register);
 router.post("/login", validateLoginDetails, login);
+router.get("/isTaken/:username", isUsernameTaken);
 router.get("/logout", logout);
 
 // login protected route

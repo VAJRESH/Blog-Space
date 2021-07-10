@@ -37,10 +37,6 @@ app.use(express.urlencoded({ extended: true }));
 const authRoutes = require("./routes/auth.route");
 app.use("/auth", authRoutes);
 
-// category related crud operations
-const categoryRoutes = require("./routes/category.route");
-app.use("/category", categoryRoutes);
-
 // tag related crud operations
 const tagRoutes = require("./routes/tag.route");
 app.use("/tag", tagRoutes);

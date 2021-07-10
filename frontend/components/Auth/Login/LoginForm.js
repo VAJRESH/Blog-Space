@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import Router from "next/router";
+import { useEffect, useState } from "react";
+import { authenticateUser, isAuth, login } from "../../../actions/auth.action";
+import { APP_NAME } from "../../../config";
 import { validateDetails } from "../../../helpers/validation.helper";
-import styles from "./LoginForm.module.scss";
 import InputWithLabel from "../../InputForm/InputWithLabel";
 import ToastMessage from "../../ToastMessage/ToastMessage";
-import { Router } from "next/router";
-import { login, authenticateUser, isAuth } from "../../../actions/auth.action";
-import { APP_NAME } from "../../../config";
+import styles from "./LoginForm.module.scss";
 
 function useLoginUser() {
   const [values, setValues] = useState({
@@ -15,6 +15,7 @@ function useLoginUser() {
   const [inputMessage, setInputMessage] = useState({
     email: "",
     password: "",
+    isError: false,
   });
   const [response, setResponse] = useState({
     type: "",
@@ -37,17 +38,25 @@ function useLoginUser() {
       setInputMessage({
         ...inputMessage,
         [fieldName]: errorMessage,
+        isError: true,
       });
     } else {
       setInputMessage({
         ...inputMessage,
         [fieldName]: "",
+        isError: false,
       });
     }
   }
 
   function loginUser(e) {
     e.preventDefault();
+    if (inputMessage.isError) {
+      return setResponse({
+        type: "error",
+        message: inputMessage.email || inputMessage.password,
+      });
+    }
     setResponse({ type: "loading", message: "Loading..." });
 
     login(values)
@@ -81,6 +90,7 @@ const LoginForm = () => {
   return (
     <div className={styles.login}>
       <ToastMessage type={response.type} message={response.message} />
+
       <form className="form" onSubmit={loginUser}>
         <fieldset>
           <legend>{APP_NAME}</legend>

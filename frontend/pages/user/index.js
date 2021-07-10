@@ -1,11 +1,14 @@
-import Layout from '../../components/Layout/Layout';
+import Layout from "../../components/Layout/Layout";
+import Private from "../../components/Auth/AccessControl/Private";
 
 const UserDashboard = () => {
-    return (
-        <Layout>
-            User Dashboard
-        </Layout>
-    );
-}
+  return (
+    <Layout>
+      <Private>
+        <h1 className={`h1`}>User Dashboard</h1>
+      </Private>
+    </Layout>
+  );
+};
 
 export default UserDashboard;

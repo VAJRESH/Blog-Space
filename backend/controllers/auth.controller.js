@@ -1,26 +1,44 @@
 const User = require("../models/user.model");
-const shortId = require("shortid");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 
-exports.register = (req, res) => {
-  const { name, email, password } = req.body;
+exports.isUsernameTaken = (req, res) => {
+  const username = req.params.username.toLowerCase();
 
-  User.findOne({ email }).exec((findError, user) => {
+  User.find({ username }).exec((findError, user) => {
     if (findError) return res.status(400).json({ error: findError });
-    if (user) return res.status(400).json({ error: "Email is taken" });
+    if (user.length !== 0) return res.status(400).send(true);
 
-    // unique id generation for SEO user
-    const username = shortId.generate();
-    const profile = `${process.env.CLIENT_URL}/profile/${username}`;
-
-    const newUser = new User({ name, email, password, profile, username });
-    newUser.save((saveError, success) => {
-      if (saveError) return res.status(400).json({ error: saveError });
-
-      res.json({ message: `New User, ${name} is registered. Please login.` });
-    });
+    res.send(false);
   });
+};
+
+exports.register = (req, res) => {
+  let { name, username, email, password } = req.body;
+  username = username.toLowerCase().split(" ").join("-");
+
+  User.find({ $or: [{ username: username }, { email: email }] }).exec(
+    (findError, user) => {
+      if (findError) return res.status(400).json({ error: findError });
+
+      if (user.length !== 0) {
+        if (user[0].username === username)
+          return res.status(400).json({ error: "Username is taken" });
+        if (user[0].email === email)
+          return res.status(400).json({ error: "Email is taken" });
+      }
+
+      // unique id generation for SEO user
+      const profile = `${process.env.CLIENT_URL}/profile/${username}`;
+
+      const newUser = new User({ name, email, password, profile, username });
+      newUser.save((saveError, success) => {
+        if (saveError) return res.status(400).json({ error: saveError });
+
+        res.json({ message: `New User, ${name} is registered. Please login.` });
+      });
+    }
+  );
 };
 
 exports.login = (req, res) => {
@@ -43,7 +61,11 @@ exports.login = (req, res) => {
     res.cookie("token", token, { expiresIn: "365d" });
 
     const { _id, username, name, email, role } = user;
-    return res.json({ token, user: { _id, username, name, email, role }, message: 'Login Success' });
+    return res.json({
+      token,
+      user: { _id, username, name, email, role },
+      message: "Login Success",
+    });
   });
 };
 
@@ -59,6 +81,7 @@ exports.requireLogin = expressJwt({
 
 exports.isAdmin = (req, res, next) => {
   const adminId = req.user._id;
+
   User.findById(adminId).exec((findError, user) => {
     if (findError) return res.status(400).json({ error: findError });
     if (!user) return res.status(400).json({ error: `User not found.` });

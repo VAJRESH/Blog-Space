@@ -1,5 +1,5 @@
 const Blog = require("../models/blogs.model");
-const Category = require("../models/category.model");
+const Category = require("../../archives/category.model");
 const Tags = require("../models/tag.model");
 // const formidable = require("formidable");
 // const slugify = require("slugify");

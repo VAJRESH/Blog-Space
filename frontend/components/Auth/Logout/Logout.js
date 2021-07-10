@@ -1,7 +1,9 @@
 const Logout = ({ handleLogout }) => {
   return (
     <>
-      <span onClick={handleLogout}>Logout</span>
+      <span onClick={handleLogout} style={{ cursor: "pointer", color: '#0077ff' }}>
+        Logout
+      </span>
     </>
   );
 };

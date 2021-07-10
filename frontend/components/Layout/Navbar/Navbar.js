@@ -5,6 +5,7 @@ import Logout from "../../Auth/Logout/Logout";
 import ToastMessage from "../../ToastMessage/ToastMessage";
 import styles from "./Navbar.module.scss";
 import NavLink from "./NavLink";
+import { useRouter } from "next/router";
 
 function useHandleNav() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(isAuth());
@@ -46,6 +47,8 @@ const Navbar = () => {
   const { handleClick, handleLogout, response, isUserLoggedIn } =
     useHandleNav();
 
+  const router = useRouter();
+
   return (
     <>
       <ToastMessage type={response.type} message={response.message} />
@@ -54,6 +57,7 @@ const Navbar = () => {
         <div className={styles.navItem}>
           <NavLink
             pageLink="/"
+            isActive={router.pathname === "/"}
             specialClass={styles.appName}
             title={APP_NAME}
           />
@@ -62,8 +66,16 @@ const Navbar = () => {
         {/* if user is not logged in */}
         {!isUserLoggedIn && (
           <div className={styles.navItem}>
-            <NavLink pageLink="/login" title="Login" />
-            <NavLink pageLink="/register" title="Register" />
+            <NavLink
+              pageLink="/login"
+              title="Login"
+              isActive={router.pathname === "/login"}
+            />
+            <NavLink
+              pageLink="/register"
+              title="Register"
+              isActive={router.pathname === "/register"}
+            />
           </div>
         )}
 
@@ -73,11 +85,16 @@ const Navbar = () => {
             {isAuth().role === 0 && (
               <NavLink
                 pageLink="/user"
+                isActive={router.pathname === "/user"}
                 title={`${isAuth().name}'s dashboard`}
               />
             )}
             {isAuth().role === 1 && (
-              <NavLink pageLink="/admin" title={`Admin's dashboard`} />
+              <NavLink
+                pageLink="/admin"
+                isActive={router.pathname === "/admin"}
+                title={`Admin's dashboard`}
+              />
             )}
             <Logout handleLogout={handleLogout} />
           </div>
