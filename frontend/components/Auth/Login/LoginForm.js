@@ -2,6 +2,7 @@ import Router from "next/router";
 import { useEffect, useState } from "react";
 import { authenticateUser, isAuth, login } from "../../../actions/auth.action";
 import { APP_NAME } from "../../../config";
+import { generateResponseMessage } from "../../../helpers/util.functions";
 import { validateDetails } from "../../../helpers/validation.helper";
 import InputWithLabel from "../../InputForm/InputWithLabel";
 import ToastMessage from "../../ToastMessage/ToastMessage";
@@ -61,23 +62,14 @@ function useLoginUser() {
 
     login(values)
       .then((res) => {
-        if (!res) setResponse({ type: "info", message: "No Response" });
-        if (res) {
-          if (res.error) {
-            setResponse({ type: "error", message: res.error });
-          } else if (res.message) {
-            setResponse({ type: "success", message: res.message });
+        generateResponseMessage(res, setResponse, () => {
+          authenticateUser(res);
 
-            authenticateUser(res);
-
-            setTimeout(() => {
-              if (isAuth().role === 1) return Router.push("/admin");
-              Router.push("/user");
-            }, 1500);
-          } else {
-            setResponse({ type: "info", message: "No Message" });
-          }
-        }
+          setTimeout(() => {
+            if (isAuth().role === 1) return Router.push("/admin");
+            Router.push("/user");
+          }, 1500);
+        });
       })
       .catch((err) => console.log(err));
   }

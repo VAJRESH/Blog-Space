@@ -11,7 +11,7 @@ const ToastMessage = ({ type, message, persist }) => {
       message: message || "",
     });
 
-    if (!persist) {
+    if (!persist || type !== "loading") {
       setTimeout(() => {
         setToastMessage({
           type: "",

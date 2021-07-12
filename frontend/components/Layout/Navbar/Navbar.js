@@ -1,48 +1,12 @@
-import { useState } from "react";
-import { isAuth, logout } from "../../../actions/auth.action";
+import { useRouter } from "next/router";
+import { isAuth } from "../../../actions/auth.action";
 import { APP_NAME } from "../../../config";
 import Logout from "../../Auth/Logout/Logout";
 import ToastMessage from "../../ToastMessage/ToastMessage";
 import styles from "./Navbar.module.scss";
 import NavLink from "./NavLink";
-import { useRouter } from "next/router";
+import useHandleNav from "./NavLogic";
 
-function useHandleNav() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(isAuth());
-  const [response, setResponse] = useState({
-    type: "",
-    message: "",
-  });
-
-  function handleLogout() {
-    logout()
-      .then((res) => {
-        if (!res) setResponse({ type: "info", message: "No Response" });
-        if (res) {
-          if (res.error) {
-            setResponse({ type: "error", message: res.error });
-          } else if (res.message) {
-            setResponse({ type: "success", message: res.message });
-          } else {
-            setResponse({ type: "info", message: "No Message" });
-          }
-        }
-
-        setTimeout(() => {
-          setResponse({
-            type: "",
-            message: "",
-          });
-        }, 1500);
-      })
-      .catch((err) => console.log(err));
-  }
-
-  function handleClick() {
-    setIsUserLoggedIn(isAuth());
-  }
-  return { handleClick, handleLogout, response, isUserLoggedIn };
-}
 const Navbar = () => {
   const { handleClick, handleLogout, response, isUserLoggedIn } =
     useHandleNav();
@@ -62,7 +26,6 @@ const Navbar = () => {
             title={APP_NAME}
           />
         </div>
-
         {/* if user is not logged in */}
         {!isUserLoggedIn && (
           <div className={styles.navItem}>

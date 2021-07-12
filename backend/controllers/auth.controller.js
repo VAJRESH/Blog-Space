@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
+const { slugify } = require("../helper/controller.helper");
 
 exports.isUsernameTaken = (req, res) => {
   const username = req.params.username.toLowerCase();
@@ -15,7 +16,7 @@ exports.isUsernameTaken = (req, res) => {
 
 exports.register = (req, res) => {
   let { name, username, email, password } = req.body;
-  username = username.toLowerCase().split(" ").join("-");
+  username = slugify(username);
 
   User.find({ $or: [{ username: username }, { email: email }] }).exec(
     (findError, user) => {

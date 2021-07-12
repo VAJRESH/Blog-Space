@@ -60,28 +60,34 @@ export function login(user) {
 // }
 
 export function setCookie(key, value) {
-  document.cookie = `${key}=${value}; path=/; max-age=31536000`;
+  if (process.browser) {
+    document.cookie = `${key}=${value}; path=/; max-age=31536000`;
+  }
 }
 
 export function getCookie(key) {
-  const cookies = document.cookie;
-  const allCookies = cookies
-    .split(";")
-    .map((items) => items.split("=").map((item) => item.trim()));
+  if (process.browser) {
+    const cookies = document.cookie;
+    const allCookies = cookies
+      .split(";")
+      .map((items) => items.split("=").map((item) => item.trim()));
 
-  let value;
-  allCookies.some((item) => {
-    if (item[0] === key.trim()) {
-      return (value = item[1]);
-    }
-    return false;
-  });
+    let value;
+    allCookies.some((item) => {
+      if (item[0] === key.trim()) {
+        return (value = item[1]);
+      }
+      return false;
+    });
 
-  return value;
+    return value;
+  }
 }
 
 export function deleteCookie(key) {
-  return (document.cookie = `${key}=; expires=${new Date()}; path=/`);
+  if (process.browser) {
+    return (document.cookie = `${key}=; expires=${new Date()}; path=/`);
+  }
 }
 
 export function setLocalStorage(key, value) {
@@ -100,6 +106,8 @@ export function isAuth() {
       return false;
     }
   }
+
+  return null;
 }
 
 export function authenticateUser(data) {

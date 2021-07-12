@@ -6,6 +6,7 @@ import ToastMessage from "../../ToastMessage/ToastMessage";
 import { register, isUsernameAvailable } from "../../../actions/auth.action";
 import { APP_NAME } from "../../../config";
 import Router from "next/router";
+import { generateResponseMessage } from "../../../helpers/util.functions";
 
 function useRegisterUser() {
   const [values, setValues] = useState({
@@ -92,26 +93,11 @@ function useRegisterUser() {
 
     register(values)
       .then((res) => {
-        let isNewUser = false;
-        if (!res) setResponse({ type: "info", message: "No Response" });
-        if (res) {
-          if (res.error) {
-            setResponse({ type: "error", message: res.error });
-          } else if (res.message) {
-            isNewUser = true;
-            setResponse({ type: "success", message: res.message });
-          } else {
-            setResponse({ type: "info", message: "No Message" });
-          }
-
+        generateResponseMessage(res, setResponse, () => {
           setTimeout(() => {
-            setResponse({
-              type: "",
-              message: "",
-            });
-            isNewUser && Router.push("/login");
+            Router.push("/login");
           }, 1500);
-        }
+        });
       })
       .catch((err) => console.log(err));
   }

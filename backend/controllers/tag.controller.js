@@ -7,14 +7,12 @@ exports.createNewTag = (req, res) => {
 
   const newTag = new Tag({ name, slug });
   newTag.save((saveError, data) =>
-    handleResponse(saveError, data, res, data)
+    handleResponse(saveError, res, { message: `${data.name} tag created` })
   );
 };
 
 exports.getAllTags = (req, res) => {
-  Tag.find({}).exec((findError, data) =>
-    handleResponse(findError, data, res, data)
-  );
+  Tag.find({}).exec((findError, data) => handleResponse(findError, res, data));
 };
 
 exports.getSingleTag = (req, res) => {
@@ -33,6 +31,6 @@ exports.deleteTag = (req, res) => {
   const slug = req.params.slug.toLowerCase();
 
   Tag.findOneAndDelete({ slug }).exec((findError, tag) =>
-    handleResponse(findError, tag, res, `${slug} deleted!!`)
+    handleResponse(findError, res, { message: `${slug} deleted!!` })
   );
 };

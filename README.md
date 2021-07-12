@@ -13,9 +13,9 @@
  
 ## Task
 - [ ] Pages and Components
-  - [ ] Home page
+  - [ ] Home page (1 day)
     - [ ] Infinite scroll blog cards
-      - [ ] Feature image, author, category, tags, title, first few lines.
+      - [ ] Feature image, author, tags, title, first few lines.
   - [x] Register
     - [x] Form design
     - [x] register new user
@@ -31,11 +31,14 @@
     - [ ] Users posts and comment history
   - [ ] Admin dashboard
     - [x] Admin access only
-    - [ ] Link to create new blog, categories, tags
+    - [ ] Link to create new blog, tags
     - [ ] Public Profile details
     - [ ] Admin posts and comment history
-  - [ ] Create tags
+  - [ ] Manage tags
     - [ ] Admin access only
+    - [ ] Show all the tags
+    - [ ] able to delete tags
+    - [ ] create new tags
   - [ ] Create blog
     - [ ] Logged In User access only
   - [ ] Update blog
@@ -63,7 +66,7 @@
 
 ## Progress (Due Date: 15 July, 2021)
 - Created this separate project from the tutorial and started project with some backend at 21:45 on 08 July, 2021.
-- Added basic info in the `README.md` and backend files which contains models, routes, controllers and validation for auth, blog, categories and tags. [08 July, 2021].
+- Progress is tracked in git with detail commit messages.  
 
 ## Installation
 - Will update soon.
