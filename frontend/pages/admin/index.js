@@ -7,7 +7,8 @@ const AdminDashboard = () => {
     <Layout>
       <Admin>
         <h1 className={`h1`}>Admin Dashboard</h1>
-        <Anchor pageLink='/admin/tags' title='Manage Tags' />
+        <Anchor pageLink='/admin/tag' title='Manage Tags' />
+        <Anchor pageLink='/admin/blog' title='Manage Blogs' />
       </Admin>
     </Layout>
   );

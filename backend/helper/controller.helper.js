@@ -1,9 +1,10 @@
 exports.slugify = (name) => {
-    return name.split(' ').join('-').toLowerCase();
-}
+  if (!name) return;
+  return name.split(" ").join("-").toLowerCase();
+};
 
 exports.handleResponse = (error, responseObject, message) => {
-  if (error) return res.status(400).json({ error: error });
+  if (error) return responseObject.status(400).json({ error: error });
 
   responseObject.json(message);
-}
+};
