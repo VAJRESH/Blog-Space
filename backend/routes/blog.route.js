@@ -25,15 +25,20 @@ const upload = multer({
 });
 
 // validators
-const { validateNewBlog } = require("../validators/blog.validator");
+const { validateBlogDetails } = require("../validators/blog.validator");
 
 // controllers
 const { requireLogin, isAdmin } = require("../controllers/auth.controller");
 const {
   createNewBlogPost,
   updateBlogPost,
-  getSingleBlog,
+  updateLikesOfBlog,
+  getUserBlogs,
   getAllBlogs,
+  getImage,
+  getSearchedBlogs,
+  getTagBlogs,
+  deleteBlog,
 } = require("../controllers/blog.controller");
 
 // api routes;
@@ -41,7 +46,7 @@ router.post(
   "/create",
   upload.single("photo"),
   requireLogin,
-  validateNewBlog,
+  validateBlogDetails,
   isAdmin,
   createNewBlogPost
 );
@@ -49,12 +54,22 @@ router.put(
   "/update/:slug",
   upload.single("photo"),
   requireLogin,
-  validateNewBlog,
+  validateBlogDetails,
   isAdmin,
   updateBlogPost
 );
+router.put(
+  "/updateLike/:slug",
+  upload.none(),
+  requireLogin,
+  isAdmin,
+  updateLikesOfBlog
+);
+router.get("/image/:slug", getImage);
 router.get("/list", getAllBlogs);
-// router.get("/list/:slug", getSingleBlog);
-// router.delete("/list/:slug", requireLogin, isAdmin, deleteCategory);
+router.get("/list/:author", getUserBlogs);
+router.get("/filter/:tag", getTagBlogs);
+router.get("/search", getSearchedBlogs);
+router.delete("/delete/:slug", requireLogin, isAdmin, deleteBlog);
 
 module.exports = router;
