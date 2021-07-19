@@ -55,6 +55,7 @@ function useManageTags() {
 
   return { handleChange, createTag, tags, newTag, response, removeTag };
 }
+
 const ManageTags = () => {
   const { handleChange, createTag, tags, newTag, response, removeTag } =
     useManageTags();

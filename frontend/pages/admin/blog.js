@@ -1,15 +1,15 @@
 import Layout from "../../components/Layout/Layout";
 import Admin from "../../components/Auth/AccessControl/Admin";
-import BlogCreate from "../../components/Dashboard/Admin/Blog";
+import ManageBlogs from "../../components/Dashboard/Admin/Blog";
 
-const CreateTags = () => {
+const Blogs = () => {
   return (
     <Layout>
-          <Admin>
-              <BlogCreate />
+      <Admin>
+        <ManageBlogs />
       </Admin>
     </Layout>
   );
 };
 
-export default CreateTags;
+export default Blogs;

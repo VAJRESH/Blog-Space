@@ -4,11 +4,104 @@ export function createNewBlog(data, token) {
   return fetch(`${API}/blog/create`, {
     method: "POST",
     headers: {
-      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: data,
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+}
+
+export function updateBlog(data, slug, token) {
+  return fetch(`${API}/blog/update/${slug}`, {
+    method: "PUT",
+    headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(data),
+    body: data,
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+}
+
+export function updateLikesOfBlog(slug, token) {
+  return fetch(`${API}/blog/updateLike/${slug}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+}
+
+export function getAllBlogs() {
+  return fetch(`${API}/blog/list`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+}
+
+export function getUserBlogs(userId) {
+  return fetch(`${API}/blog/list/${userId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+}
+
+export function getBlogsByTag(tag) {
+  return fetch(`${API}/blog/list/${tag}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+}
+
+export function getBlogsByQuery(searchString) {
+  return fetch(`${API}/blog/?=${searchString}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+}
+
+export function deleteBlog(slug, token) {
+  return fetch(`${API}/blog/delete/${slug}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then((res) => {
       return res.json();
