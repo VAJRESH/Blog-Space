@@ -18,7 +18,6 @@ export function updateBlog(data, slug, token) {
   return fetch(`${API}/blog/update/${slug}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: data,
@@ -56,11 +55,24 @@ export function getAllBlogs() {
     .catch((err) => console.log(err));
 }
 
+export function getSingleBlog(slug) {
+  return fetch(`${API}/blog/single/${slug}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+}
+
 export function getUserBlogs(userId) {
   return fetch(`${API}/blog/list/${userId}`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
+      Accept: "application/json",
     },
   })
     .then((res) => {

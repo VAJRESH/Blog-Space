@@ -138,10 +138,24 @@ exports.getImage = (req, res) => {
   });
 };
 
+exports.getSingleBlog = (req, res) => {
+  const slug = req.params.slug.toLowerCase();
+
+  Blog.findOne({ slug })
+    .populate("tags")
+    .exec(async (err, blog) => {
+      if (err) return res.status(400).json({ error, err });
+
+      return res.send(blog);
+    });
+};
+
 exports.getUserBlogs = (req, res) => {
   const authorId = req.params.author;
 
   Blog.find({ author: authorId })
+    .populate("tags", "_id name")
+    .populate("author", "name username photo profile")
     .select("-photo")
     .limit(10)
     .exec((err, blogs) => {

@@ -35,6 +35,7 @@ const {
   updateLikesOfBlog,
   getUserBlogs,
   getAllBlogs,
+  getSingleBlog,
   getImage,
   getSearchedBlogs,
   getTagBlogs,
@@ -71,5 +72,6 @@ router.get("/list/:author", getUserBlogs);
 router.get("/filter/:tag", getTagBlogs);
 router.get("/search", getSearchedBlogs);
 router.delete("/delete/:slug", requireLogin, isAdmin, deleteBlog);
+router.get("/single/:slug", getSingleBlog);
 
 module.exports = router;

@@ -1,30 +1,45 @@
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-import "../../../../../node_modules/react-quill/dist/quill.snow.css";
+import "quill/dist/quill.snow.css";
 import styles from "./BlogCreate.module.scss";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const BlogCreate = ({ handlers, data, tags }) => {
-  const [handleTitle, handleBody, handleTags, createBlog] = handlers;
-
+const BlogEditor = ({ handlers, data, tags, isUpdate }) => {
+  const [handleTitle, handleBody, handleTags, handleSubmit] = handlers;
+  console.log(data);
   return (
     <div className={`${styles.editorContainer}`}>
-      <form onSubmit={createBlog}>
+      {/* editor */}
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="form-group">
           <label className="text-muted">Title</label>
-          <input type="text" className="form-control" onChange={handleTitle} />
+          <input
+            type="text"
+            className="form-control"
+            value={data.title}
+            onChange={handleTitle}
+          />
         </div>
         <div className="form-group">
           <ReactQuill
             modules={QuillModules}
             formats={QuillFormats}
+            theme={"snow"}
             value={data.body}
             placeholder="write something amazing.."
             onChange={handleBody}
           />
+
+          <p>
+            {data.body.length >= 200 ? (
+              <>Total Characters:{data.body.length}</>
+            ) : (
+              <>Minimum {200 - data.body.length} Characters required</>
+            )}
+          </p>
         </div>
         <div>
           <button type="submit" className="btn btn-primary">
-            Create New Blog
+            {isUpdate ? "Update Blog" : "Create New Blog"}
           </button>
         </div>
       </form>
@@ -35,7 +50,8 @@ const BlogCreate = ({ handlers, data, tags }) => {
             <div key={tag._id}>
               <input
                 type="checkbox"
-                onChange={() => handleTags(tag._id)}
+                checked={data.tags.includes(tag._id)}
+                onChange={() => handleTags(tag)}
                 name="tag"
                 id="tag"
               />
@@ -44,15 +60,26 @@ const BlogCreate = ({ handlers, data, tags }) => {
           );
         })}
       </section>
+
+      {/* preview */}
+      <div>
+        <h1>{data.title}</h1>
+        <section>
+          {data.tagNames.map((tag) => {
+            return <span>{tag}</span>;
+          })}
+        </section>
+        <ReactQuill value={data.body} readOnly={true} theme={"bubble"} />
+      </div>
     </div>
   );
 };
 
-export default BlogCreate;
+export default BlogEditor;
 
 const QuillModules = {
   toolbar: [
-    [{ header: "1" }, { header: "2" }, { header: [3, 4, 5, 6] }, { font: [] }],
+    [{ header: "2" }, { header: [3, 4, 5, 6] }, { font: [] }],
     [{ size: [] }],
     ["bold", "italic", "underline", "strike", "blockquote"],
     [{ list: "ordered" }, { list: "bullet" }],
