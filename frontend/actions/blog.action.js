@@ -28,11 +28,24 @@ export function updateBlog(data, slug, token) {
     .catch((err) => console.log(err));
 }
 
+export function updateView(slug) {
+  return fetch(`${API}/blog/updateView/${slug}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+}
+
 export function updateLikesOfBlog(slug, token) {
   return fetch(`${API}/blog/updateLike/${slug}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
+      Accept: "application/json",
       Authorization: `Bearer ${token}`,
     },
   })
@@ -42,8 +55,8 @@ export function updateLikesOfBlog(slug, token) {
     .catch((err) => console.log(err));
 }
 
-export function getAllBlogs() {
-  return fetch(`${API}/blog/list`, {
+export function getAllBlogs(skip = 0, limit = 5) {
+  return fetch(`${API}/blog/list?skip=${skip}&limit=${limit}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

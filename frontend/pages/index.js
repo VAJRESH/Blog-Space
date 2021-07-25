@@ -1,10 +1,10 @@
-import Layout from "../components/Layout/Layout"
+import AllBlogs from "../components/Blog/AllBlogs/AllBlogs";
 
 const Home = () => {
-    return (
-        <Layout>
-            Index page
-        </Layout>
-    )
-}
+  return (
+    <>
+      <AllBlogs />
+    </>
+  );
+};
 export default Home;

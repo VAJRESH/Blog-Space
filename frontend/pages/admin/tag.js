@@ -4,11 +4,11 @@ import ManageTags from "../../components/Dashboard/Admin/Tag";
 
 const Tags = () => {
   return (
-    <Layout>
+    <>
       <Admin>
         <ManageTags />
       </Admin>
-    </Layout>
+    </>
   );
 };
 

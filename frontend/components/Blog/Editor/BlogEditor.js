@@ -1,11 +1,11 @@
 import dynamic from "next/dynamic";
 import "quill/dist/quill.snow.css";
-import styles from "./BlogCreate.module.scss";
+import styles from "./BlogEditor.module.scss";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const BlogEditor = ({ handlers, data, tags, isUpdate }) => {
   const [handleTitle, handleBody, handleTags, handleSubmit] = handlers;
-  console.log(data);
+
   return (
     <div className={`${styles.editorContainer}`}>
       {/* editor */}
@@ -50,7 +50,7 @@ const BlogEditor = ({ handlers, data, tags, isUpdate }) => {
             <div key={tag._id}>
               <input
                 type="checkbox"
-                checked={data.tags.includes(tag._id)}
+                checked={data.tags && data.tags.includes(tag._id)}
                 onChange={() => handleTags(tag)}
                 name="tag"
                 id="tag"

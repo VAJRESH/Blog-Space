@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { getCookie } from "../../../../actions/auth.action";
-import { createNewTag } from "../../../../actions/tag.action";
-import InputWithLabel from "../../../InputForm/InputWithLabel";
+import { getCookie } from "../frontend/actions/auth.action";
+import { createNewTag } from "../frontend/actions/tag.action";
+import InputWithLabel from "../frontend/components/InputForm/InputWithLabel";
 function useCreateTags() {
   const [tag, setTag] = useState();
 

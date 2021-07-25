@@ -86,6 +86,19 @@ exports.updateBlogPost = (req, res) => {
   });
 };
 
+exports.updateViewCount = (req, res) => {
+  const slug = req.params.slug.toLowerCase();
+
+  Blog.findOne({ slug }).exec((err, blog) => {
+    if (err) return res.status(400).json({ error: err });
+
+    blog.views += 1;
+
+    blog.save((saveError, data) => {
+      handleResponse(saveError, res, { message: "View Count Updated" });
+    });
+  });
+};
 exports.updateLikesOfBlog = (req, res) => {
   const slug = req.params.slug.toLowerCase();
   const userId = req.user._id;
@@ -108,11 +121,19 @@ exports.updateLikesOfBlog = (req, res) => {
 };
 
 exports.getAllBlogs = (req, res) => {
+  const skip = +req.query.skip || 0;
+  const limit = +(req.query.limit || 10) + skip;
+
   Blog.find({})
+    .populate("tags", "_id name")
+    .populate("author", "name username photo profile")
     .select("-photo")
-    .limit(10)
     .exec((err, blogs) => {
-      return handleResponse(err, res, blogs);
+      const slicedBlogs = blogs.slice(skip, limit);
+      return handleResponse(err, res, {
+        blogs: slicedBlogs,
+        total: blogs.length,
+      });
     });
 };
 
@@ -120,8 +141,12 @@ exports.getTagBlogs = (req, res) => {
   const tag = req.params.tag;
 
   Blog.find({ tags: { $in: tag } })
+    .populate("tags", "_id name")
+    .populate("author", "name username photo profile")
     .select("-photo")
-    .limit(10)
+    .select("-photo")
+    // .skip()
+    .limit(5)
     .exec((err, blogs) => {
       return handleResponse(err, res, blogs);
     });
@@ -143,6 +168,8 @@ exports.getSingleBlog = (req, res) => {
 
   Blog.findOne({ slug })
     .populate("tags")
+    .populate("author")
+    .select("-photo")
     .exec(async (err, blog) => {
       if (err) return res.status(400).json({ error, err });
 

@@ -4,13 +4,13 @@ import Anchor from "../../components/Dashboard/Common/Anchor";
 
 const AdminDashboard = () => {
   return (
-    <Layout>
+    <>
       <Admin>
         <h1 className={`h1`}>Admin Dashboard</h1>
         <Anchor pageLink='/admin/tag' title='Manage Tags' />
         <Anchor pageLink='/admin/blog' title='Manage Blogs' />
       </Admin>
-    </Layout>
+    </>
   );
 };
 

@@ -4,11 +4,11 @@ import ManageBlogs from "../../../components/Dashboard/Admin/Blog";
 
 const Blogs = () => {
   return (
-    <Layout>
+    <>
       <Admin>
         <ManageBlogs />
       </Admin>
-    </Layout>
+    </>
   );
 };
 

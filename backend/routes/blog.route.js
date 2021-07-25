@@ -33,6 +33,7 @@ const {
   createNewBlogPost,
   updateBlogPost,
   updateLikesOfBlog,
+  updateViewCount,
   getUserBlogs,
   getAllBlogs,
   getSingleBlog,
@@ -59,13 +60,8 @@ router.put(
   isAdmin,
   updateBlogPost
 );
-router.put(
-  "/updateLike/:slug",
-  upload.none(),
-  requireLogin,
-  isAdmin,
-  updateLikesOfBlog
-);
+router.put("/updateLike/:slug", upload.none(), requireLogin, updateLikesOfBlog);
+router.put("/updateView/:slug", upload.none(), updateViewCount);
 router.get("/image/:slug", getImage);
 router.get("/list", getAllBlogs);
 router.get("/list/:author", getUserBlogs);

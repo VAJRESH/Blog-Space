@@ -1,30 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { getCookie, isAuth } from "../../../../actions/auth.action";
-import { createNewBlog, getUserBlogs } from "../../../../actions/blog.action";
-import { getAllTags } from "../../../../actions/tag.action";
-import { generateFormData } from "../../../../helpers/util.functions";
-import BlogCard from "./BlogCards/BlogCard";
-import BlogEditor from "./Editor/BlogEditor";
 import Link from "next/link";
-
-function useManageBlogs() {
-  const [userBlogs, setUserBlogs] = useState([]);
-
-  useEffect(() => {
-    loadUserBlogs();
-  }, []);
-
-  function loadUserBlogs() {
-    getUserBlogs(isAuth()._id).then((res) => {
-      if (res.error) return;
-      setUserBlogs(res);
-    });
-  }
-
-  return {
-    userBlogs,
-  };
-}
+import React from "react";
+import BlogCard from "../../../Blog/BlogCards/BlogCard";
+import useManageBlogs from "../../Logic/useManageBlogs";
 
 const ManageBlogs = () => {
   const { userBlogs } = useManageBlogs();

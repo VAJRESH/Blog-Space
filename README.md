@@ -13,9 +13,10 @@
  
 ## Task
 - [ ] Pages and Components
+  - [ ] Navbar
   - [ ] Home page (1 day)
     - [ ] Infinite scroll blog cards
-      - [ ] Feature image, author, tags, title, first few lines.
+      - [ ] Cards containing Feature image, author, tags, title, first few lines.
   - [x] Register
     - [x] Form design
     - [x] register new user
@@ -26,23 +27,23 @@
     - [x] redirect to (user/admin) dashboard
   - [ ] User dashboard
     - [x] Logged In User access only
-    - [ ] Link to create new blog
     - [ ] Public Profile details
     - [ ] Users posts and comment history
   - [ ] Admin dashboard
     - [x] Admin access only
-    - [ ] Link to create new blog, tags
+    - [x] Link to create new blog, tags
+    - [x] Update blog
     - [ ] Public Profile details
     - [ ] Admin posts and comment history
-  - [ ] Manage tags
-    - [ ] Admin access only
-    - [ ] Show all the tags
-    - [ ] able to delete tags
-    - [ ] create new tags
-  - [ ] Create blog
-    - [ ] Logged In User access only
-  - [ ] Update blog
-    - [ ] Logged In User access only
+  - [x] Manage tags
+    - [x] Admin access only
+    - [x] Show all the tags
+    - [x] able to delete tags
+    - [x] create new tags
+  - [x] Create blog
+    - [x] Admin access only
+  - [x] Update blog
+    - [x] Logged In User access only
   - [ ] Contact
     - [ ] Form design
     - [ ] Email the data

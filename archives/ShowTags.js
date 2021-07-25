@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { getCookie } from "../../../../actions/auth.action";
-import { deleteTag, getAllTags } from "../../../../actions/tag.action";
-import { generateResponseMessage } from "../../../../helpers/util.functions";
-import ToastMessage from "../../../ToastMessage/ToastMessage";
+import { getCookie } from "../frontend/actions/auth.action";
+import { deleteTag, getAllTags } from "../frontend/actions/tag.action";
+import { generateResponseMessage } from "../frontend/helpers/util.functions";
+import ToastMessage from "../frontend/components/ToastMessage/ToastMessage";
 
 function useGetAllTags() {
   const [tags, setTags] = useState([]);
